@@ -14,7 +14,8 @@ public class Circolari {
 	public Circolari(String nomeFile){
 		nomeCompleto=nomeFile;
 		//Integrazione nuovo metodo divisione stringa
-		Pattern r = Pattern.compile("([0-9]+) *- *(.*)\\.pdf$");
+		//Ho cambaito il programma dato che le circolari non sono divise da un -
+		Pattern r = Pattern.compile("CIRC([0-9]+) *(.*)\\.pdf$");
 		
 		Matcher m = r.matcher(nomeCompleto);
 		

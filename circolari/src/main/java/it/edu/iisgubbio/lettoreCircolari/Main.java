@@ -9,7 +9,8 @@ public class Main {
 	static List<Circolari> listaCircolari = new ArrayList<>();
 	
 	public static void crea(String nomeCartella) {
-		File folder = new File("/Users/classe4I/archivio");
+		//modificato folder così che utilizzi la cartella dove vengono scaricati i file
+		File folder = new File(nomeCartella);
         File[] listOfFiles = folder.listFiles();
         
         if (listOfFiles != null) {
@@ -31,9 +32,7 @@ public class Main {
 	}
 	public static void main(String[] args) {
 		
-		crea("/Users/classe4I/archivio");
-		boolean k = esiste(317);	
-		System.out.println(k);
+		crea(System.getProperty("user.home")+"/archivio/");
         System.out.println("Nomi dei file: " + listaCircolari);
 		
 	}

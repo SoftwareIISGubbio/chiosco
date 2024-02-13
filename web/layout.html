@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            background-color: black;
+            margin:0; padding:0 ; width: 100vw; height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-areas:
+                "log log gra gra ori ori"
+                "ver im1 gra gra im3 im4"
+                "ver im2 gra gra im5 im6";
+        }
+        #log { background-color: #EECD00; background-image: url(logo.png);
+        background-size: 90%; background-position: center 80%; background-repeat: no-repeat; padding: 1rem}
+        #gra, #ori, #ver { background-color: black; }
+        span { font-size:2rem; color: white }
+
+        #im1 { background-image: url(albero.jpeg); background-size: cover; background-position: center }
+        #im2 { background-image: url(gruppo1.jpeg); background-size: cover; background-position: center }
+        #im3 { background-image: url(gubbio.jpeg); background-size: cover; background-position: center }
+        #im4 { background-image: url(cassata.jpeg); background-size: cover; background-position: center }
+        #im5 { background-image: url(gattapone.jpeg); background-size: cover; background-position: center }
+        #im6 { background-image: url(gruppo2.jpeg); background-size: cover; background-position: center }
+
+    </style>
+    <script>
+        "use strict";
+
+        let playList = [
+            { nome:"informatico.mp4", verticale: true },
+            { nome:"biologico.mp4", verticale: false },
+            { nome:"elettronico.mp4", verticale: false },
+            { nome:"moda.mp4", verticale: true },
+            { nome:"sia.mp4", verticale: false }
+        ]
+
+        let verticale = '"log log gra gra ori ori" "im1 ver gra gra im3 im4" "im2 ver gra gra im5 im6"';
+        let orizzontale = '"log log im1 ori ori im2" "ver gra gra gra im3 im4" "ver gra gra gra im5 im6"';
+        function gira(){
+            let body = document.querySelector("body");
+            let props = window.getComputedStyle(body)
+            console.log(props.gridTemplateAreas)
+            body.style.gridTemplateAreas= verticale;
+        }
+        let play=false;
+        function playPausa(){
+            if(play){
+                gra.play();
+                ori.play();
+                ver.play();
+            }else{
+                gra.pause();
+                ori.pause();
+                ver.pause();
+            }
+            play = !play;
+            document.querySelector("span").innerText = play ? "▶" : "⏸";
+        }
+        function calcolato(x){
+            let props = window.getComputedStyle(document.querySelector(x));
+            return {
+                width: parseInt(props.width),
+                height: parseInt(props.height),
+            };
+        }
+        function scalaVideo(id, oriz=1, vert=1){
+            let dimRif = calcolato("#im3");
+            let dimBer = calcolato("#"+id);
+            let bersaglio = document.querySelector("#"+id);
+            bersaglio.width = dimRif.width*oriz;
+            bersaglio.height = dimRif.height*vert;
+        }
+        function doLayout(){
+            scalaVideo("ori",2,1);
+            scalaVideo("ver",1,2);
+            scalaVideo("gra",2,3);
+        }
+        let indiceGrande = 0;
+        function finitoGrande(){
+            console.log("finito");
+            indiceGrande = (indiceGrande+1)% playList.length;
+            let sorgente = gra.querySelector("source");
+            sorgente.src = playList[indiceGrande].nome;
+            console.log(playList[indiceGrande].nome);
+            if(playList[indiceGrande].verticale){
+                document.querySelector("body").style.gridTemplateAreas = verticale;
+                scalaVideo("gra",2,3);
+            }else{
+                document.querySelector("body").style.gridTemplateAreas = orizzontale;
+                scalaVideo("gra",3,2);
+            }
+            gra.load();
+            gra.play();
+        }
+    </script>
+</head>
+<body onload="doLayout()">
+    <div id="log" style="grid-area: log"><span onclick="playPausa()">▶</span></div>
+    <video id="gra" style="grid-area: gra" onended="finitoGrande()">
+        <source src="informatico.mp4" />
+    </video>
+    <video id="ori" style="grid-area: ori" muted height="100">ori</div>
+        <source src="elettronico.mp4" />
+    </video>
+    <video id="ver" style="grid-area: ver" muted height="100">ori</div>
+        <source src="moda.mp4" />
+    </video>
+    <div id="im1" style="grid-area: im1"></div>
+    <div id="im2" style="grid-area: im2"></div>
+    <div id="im3" style="grid-area: im3"></div>
+    <div id="im4" style="grid-area: im4"></div>
+    <div id="im5" style="grid-area: im5"></div>
+    <div id="im6" style="grid-area: im6"></div>
+</body>
+</html>

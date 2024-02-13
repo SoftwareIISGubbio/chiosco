@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PDF!</title>
+    <style>
+        section {width: 50vw; height: 50vh; border: 1px solid red }
+        iframe {width: 100%; height: 100%; }
+    </style>
+    <script type="text/javascript">
+    "use strict";
+    let info = [
+        {
+        	id: 230,
+        	data: "12-12-2023",
+        	nome: "CIRC230 Interviste per Progetto Erasmus+ mobilità Figueira da Foz Portogallo",
+        	link: "https://www.iisgubbio.edu.it/sdg/app/default/view_documento.php?a=akVIEW_FROM_ID&id_documento=194153708&sede_codice=PGIT0015"
+        },
+        {
+            id: 229,
+            data: "12-12-2023",
+            nome: "CIRC229 Progetto Rotary Youth Exchange",
+            link: "https://www.iisgubbio.edu.it/sdg/app/default/view_documento.php?a=akVIEW_FROM_ID&id_documento=194147984&sede_codice=PGIT0015"
+        }
+    ];
+
+    function apri(){
+    	// console.log(info[0].id);
+    	// circolare.src = info[0].link;
+    	contenuto.innerHTML="";
+    	for(let i=0; i<info.length; i++){
+    		let circ=info[i];
+    		console.log(circ.id);
+    		let p = document.createElement("p");
+    		p.innerText = circ.nome;
+    		p.indice = i;
+    		p.addEventListener("click", sceltaCircolare );
+    		contenuto.appendChild(p);
+    	}
+    }
+
+    function sceltaCircolare(e){
+    	contenuto.innerHTML="";
+    	console.log(">> "+e.target.indice);
+    	let iframe = document.createElement("iframe");
+    	iframe.src = info[e.target.indice].link;
+    	contenuto.appendChild(iframe);
+    }
+    </script>
+
+</head>
+<body onload="apri()">
+    <h1 onclick="apri()">indice</h1>
+    <section id="contenuto">
+    </section>
+</body>
+</html>

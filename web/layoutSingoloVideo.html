@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>chiosco</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: Optima, Sans, Verdana, sans-serif; 
+            background-color: black;
+            margin:0; padding:0 ; width: 100vw; height: 100vh;
+            background-color: black;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-areas:
+                "log log gra gra im0 im1"
+                "im2 im3 gra gra im4 im5"
+                "im6 im7 gra gra im8 bx1";
+        }
+        #log { background-color: #EECD00; background-image: url(logo.png);
+        background-size: 90%; background-position: center 80%; background-repeat: no-repeat; padding: 1rem}
+        span { font-size:2rem; color: white }
+        .foto { background-size: cover; background-position: center}
+        .box { overflow: hidden }
+    </style>
+    <script src="m_slideshow/script.js"></script>
+    <script>
+        "use strict";
+
+        let playList = [
+            { nome:"video/informatico.mp4", verticale: true, tempo: 37 },
+
+            { nome:"video/agrario_r.mp4", verticale: false, tempo: 97},
+            { nome:"video/biologico_r.mp4", verticale: false, tempo: 66},
+            { nome:"video/costruzioni_r.mp4", verticale: false, tempo: 82 },
+            { nome:"video/elettronico_r.mp4", verticale: false, tempo: 75 },
+
+            { nome:"video/backstage.mp4", verticale: true, tempo: 15 },
+
+            { nome:"video/informatico_r.mp4", verticale: false, tempo: 82 },
+            { nome:"video/meccanico_r.mp4", verticale: false, tempo: 108 },
+
+            { nome:"video/inglese_r.mp4", verticale: false, tempo: 199 },
+            { nome:"video/italianoStoria_r.mp4", verticale: false, tempo: 119 },
+
+            { nome:"video/backstage.mp4", verticale: true, tempo: 15 },
+
+            { nome:"video/gaming_r.mp4", verticale: false, tempo: 90 },
+            { nome:"video/comodato_r.mp4", verticale: false, tempo: 100 },
+            { nome:"video/matematica_r.mp4", verticale: false, tempo: 132}
+        ];
+
+        let foto=[
+            "00.jpeg","01.jpeg","02.jpeg","03.jpeg",
+            "04.jpeg","05.jpeg","06.jpeg","07.jpeg",
+            "08.jpeg","09.jpeg"];
+
+        let verticale = '"log log gra gra im0 im1" '+
+                        '"im2 im3 gra gra im4 im5" '+
+                        '"im6 im7 gra gra im8 bx1"';
+        let orizzontale = '"log log im0 im1 im2 im3" '+
+                          '"im4 gra gra gra gra im5" '+
+                          '"im6 gra gra gra gra bx1"';
+
+        let play=true;
+        function playPausa(){
+            if(play){
+                console.log("play");
+                gra.play().then( e => {
+                    play = !play;
+                    document.querySelector("span").innerText = play ? "▶" : "⏸";});
+            }else{
+                console.log("pause");
+                gra.pause();
+                play = !play;
+                document.querySelector("span").innerText = play ? "▶" : "⏸";
+            }
+        }
+
+        let dimRif=null;
+        function scalaVideo(id, oriz=1, vert=1){
+            if(dimRif==null){
+                let props = window.getComputedStyle(document.getElementById("im0"));
+                dimRif = {
+                    width: parseInt(props.width),
+                    height: parseInt(props.height)
+                };
+                console.log(dimRif);
+            }
+            let bersaglio = document.querySelector("#"+id);
+            bersaglio.width = dimRif.width*oriz;
+            bersaglio.height = dimRif.height*vert;
+        }
+        let indiceVideo = 0;
+        function finitoVideo(){
+            indiceVideo = (indiceVideo+1)% playList.length;
+            let sorgente = gra.querySelector("source");
+            sorgente.src = playList[indiceVideo].nome;
+            console.log(playList[indiceVideo].nome);
+            if(playList[indiceVideo].verticale){
+                document.querySelector("body").style.gridTemplateAreas = verticale;
+                scalaVideo("gra",2,3);
+            }else{
+                document.querySelector("body").style.gridTemplateAreas = orizzontale;
+                scalaVideo("gra",4,2);
+            }
+            gra.load();
+            gra.play();
+        }
+        function cambiaFoto(){
+            for (let i = foto.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [foto[i], foto[j]] = [foto[j], foto[i]];
+            }
+            for(let i=0;i<=8; i++){
+                document.getElementById("im"+i).style.backgroundImage = "url(img/"+foto[i]+")";
+            }
+        }
+        function inizializzaPagina(){
+            scalaVideo("gra",2,3);
+            cambiaFoto();
+            playPausa();
+            m_slideshow("bx1");
+        }
+    </script>
+</head>
+<body onload="inizializzaPagina()">
+    <div id="log" style="grid-area: log"><span onclick="playPausa()">▶</span></div>
+    <video id="gra" style="grid-area: gra" onended="finitoVideo()">
+        <source src="video/informatico.mp4" />
+    </video>
+    <div id="im0" class="foto" style="grid-area: im0"></div>
+    <div id="im1" class="foto" style="grid-area: im1"></div>
+    <div id="im2" class="foto" style="grid-area: im2"></div>
+    <div id="im3" class="foto" style="grid-area: im3"></div>
+    <div id="im4" class="foto" style="grid-area: im4"></div>
+    <div id="im5" class="foto" style="grid-area: im5"></div>
+    <div id="im6" class="foto" style="grid-area: im6"></div>
+    <div id="im7" class="foto" style="grid-area: im7"></div>
+    <div id="im8" class="foto" style="grid-area: im8"></div>
+
+    <div id="bx1" class="box" style="grid-area: bx1"></div>
+</body>
+</html>

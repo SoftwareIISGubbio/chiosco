@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
-public class ProvaDownload {
+public class DownloadCircolari {
 
     static FirefoxDriver driver;
     static{
@@ -34,7 +34,7 @@ public class ProvaDownload {
 
     public static void main(String[] args) throws InterruptedException {
         driver.get("https://www.iisgubbio.edu.it/comunicati");
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         List<WebElement> cookie = driver.findElements( By.cssSelector("div.cookiebar"));
         WebElement linkC = cookie.get(0).findElement(By.cssSelector("button.cookiebar-ko"));
         linkC.click();
@@ -44,8 +44,13 @@ public class ProvaDownload {
         for(WebElement elem: elementi) {
             WebElement titolo = elem.findElement( By.cssSelector("p") );
             System.out.println( titolo.getText() );
-            WebElement link = elem.findElement(By.cssSelector("a.link-to-file"));
-            link.click();
+            WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
+            Circolare c = new Circolare(titolo.getText());
+            // FIXME non riesce ad inteficare il numero della circolare
+            System.out.println(c.getNumero());
+            if(!ArchivioCircolari.esiste(c.getNumero())){
+            	link.click();
+            }
         }
 
         // il pezzo sotto per cambiare tab ma in questo contesto non serve

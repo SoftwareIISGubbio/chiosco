@@ -1,4 +1,4 @@
-package it.edu.iisgubbio.lettoreCircolari;
+package it.edu.iisgubbio.spaggiari;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 /****************************************************************************
  * Rappresenta il documento di una circolare sul file system
  ***************************************************************************/
-public class Circolari {
+public class Circolare {
 	private String nomeCompleto;
 	private String nome;
 	private int numero;
 	
-	public Circolari(String nomeFile){
+	public Circolare(String nomeFile){
 		nomeCompleto=nomeFile;
 		//Integrazione nuovo metodo divisione stringa
 		//Ho cambaito il programma dato che le circolari non sono divise da un -

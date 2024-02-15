@@ -33,6 +33,7 @@ public class DownloadCircolari {
     }
 
     public static void main(String[] args) throws InterruptedException {
+    	ArchivioCircolari archivio = new ArchivioCircolari();
         driver.get("https://www.iisgubbio.edu.it/comunicati");
         Thread.sleep(2000);
         List<WebElement> cookie = driver.findElements( By.cssSelector("div.cookiebar"));
@@ -45,10 +46,9 @@ public class DownloadCircolari {
             WebElement titolo = elem.findElement( By.cssSelector("p") );
             System.out.println( titolo.getText() );
             WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
-            Circolare c = new Circolare(titolo.getText());
-            // FIXME non riesce ad inteficare il numero della circolare
-            System.out.println(c.getNumero());
-            if(!ArchivioCircolari.esiste(c.getNumero())){
+//            // FIXME non riesce ad inteficare il numero della circolare
+            System.out.println("%%%%%: "+Circolare.getNumeroDaNome(titolo.getText()));
+            if(!archivio.esiste(Circolare.getNumeroDaNome(titolo.getText()))){
             	link.click();
             }
         }

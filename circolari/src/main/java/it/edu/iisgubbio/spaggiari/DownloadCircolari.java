@@ -46,7 +46,6 @@ public class DownloadCircolari {
             WebElement titolo = elem.findElement( By.cssSelector("p") );
             System.out.println( titolo.getText() );
             WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
-//            // FIXME non riesce ad inteficare il numero della circolare
             System.out.println("%%%%%: "+Circolare.getNumeroDaNome(titolo.getText()));
             if(!archivio.esiste(Circolare.getNumeroDaNome(titolo.getText()))){
             	link.click();

@@ -33,7 +33,6 @@ public class DownloadCircolari {
     }
 
     public static void main(String[] args) throws InterruptedException {
-    	ArchivioCircolari archivio = new ArchivioCircolari();
         driver.get("https://www.iisgubbio.edu.it/comunicati");
         Thread.sleep(2000);
         List<WebElement> cookie = driver.findElements( By.cssSelector("div.cookiebar"));
@@ -43,20 +42,16 @@ public class DownloadCircolari {
         List<WebElement> elementi = driver.findElements( By.cssSelector("div.media"));
         System.out.println(elementi.size());
         for(WebElement elem: elementi) {
-            WebElement titolo = elem.findElement( By.cssSelector("p") );
-            System.out.println( titolo.getText() );
+        	//Dato che utilizzavo sempre il .getText ho modificato la variabile in modo da farlo una volta sola
+            String titolo = elem.findElement( By.cssSelector("p") ).getText();
+            System.out.println( titolo);
             WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
-            System.out.println("%%%%%: "+Circolare.getNumeroDaNome(titolo.getText()));
-            if(!archivio.esiste(Circolare.getNumeroDaNome(titolo.getText()))){
+            System.out.println("%%%%%: "+Circolare.getNumeroDaNome(titolo));
+            if(!ArchivioCircolari.esiste(Circolare.getNumeroDaNome(titolo)) && Circolare.isCircolare(titolo)){
             	link.click();
             }
         }
-
-        // il pezzo sotto per cambiare tab ma in questo contesto non serve
-        // ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        // driver.switchTo().window(tabs.get(1)); // id of the tab
-
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         driver.quit();
     }
 

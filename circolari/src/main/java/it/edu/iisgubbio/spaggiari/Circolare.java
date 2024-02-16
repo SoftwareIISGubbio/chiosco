@@ -15,20 +15,45 @@ public class Circolare {
 		nomeCompleto=nomeFile;
 		//Integrazione nuovo metodo divisione stringa
 		//Ho cambaito il programma dato che le circolari non sono divise da un -
-		Pattern r = Pattern.compile("CIRC([0-9]+) *(.*)$");
-
-		Matcher m = r.matcher(nomeCompleto);
-
+		
+		Matcher m = patMat(nomeCompleto);
+		
 		if (m.find( )) {
 			numero=Integer.parseInt(m.group(1));
 			nome=m.group(2);
 			System.out.println("numero circolare: " + m.group(1) );
 			System.out.println("nome circolare: " + m.group(2) );
 		} else {
-			System.out.println("NO MATCH :");
+			System.out.println("NO MATCH");
 		}
 	}
 
+	private static Matcher patMat(String nomeCompleto) {
+		Pattern r = Pattern.compile("^CIRC([0-9]+) *(.*)$");
+		
+		return r.matcher(nomeCompleto);
+	}
+	
+	public static int getNumeroDaNome(String nomeCompleto) {
+		Matcher m = patMat(nomeCompleto);
+
+		if (m.find( )) {
+			return Integer.parseInt(m.group(1));
+		} else {
+			System.out.println("NO MATCH : getNumero");
+		}
+		return 0;
+	}
+	
+	public static boolean isCircolare(String nomeCompleto) {
+		Matcher m = patMat(nomeCompleto);
+
+		if (m.find( )) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
@@ -40,20 +65,6 @@ public class Circolare {
 	public int getNumero() {
 		return numero;
 	}
-
-	public static int getNumeroDaNome(String nomeCompleto) {
-		Pattern r = Pattern.compile("CIRC([0-9]+) *(.*)$");
-
-		Matcher m = r.matcher(nomeCompleto);
-
-		if (m.find( )) {
-			return Integer.parseInt(m.group(1));
-		} else {
-			System.out.println("NO MATCH : getNumero");
-		}
-		return 0;
-	}
-
 	@Override
 	public String toString() {
 		return "nome: " + nomeCompleto;

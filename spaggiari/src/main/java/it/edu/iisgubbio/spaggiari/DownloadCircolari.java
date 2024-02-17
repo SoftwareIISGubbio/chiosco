@@ -1,5 +1,6 @@
 package it.edu.iisgubbio.spaggiari;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 
@@ -11,15 +12,26 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 
 public class DownloadCircolari {
 
-    static FirefoxDriver driver;
-    static{
+    public static void main(String[] args) throws InterruptedException {
+        String cartellaDownload = "";
+        if(args.length>0) {
+            cartellaDownload = args[0];
+        } else {
+            cartellaDownload = System.getProperty("user.home")+"/archivio/";
+        }
+        if(args.length>1) {
+            // controlla headless
+        }
+
+        ArchivioCircolari.folder =new File(cartellaDownload);
+        // configuro il driver
         // Configura le opzioni di Firefox per gestire i download dei PDF
         FirefoxOptions options = new FirefoxOptions();
         FirefoxProfile profile = new FirefoxProfile();
 
         // https://stackoverflow.com/questions/36309314/set-firefox-profile-to-download-files-automatically-using-selenium-and-java
         profile.setPreference("browser.download.folderList", 2);
-        profile.setPreference("browser.download.dir", System.getProperty("user.home")+"/archivio/");
+        profile.setPreference("browser.download.dir", cartellaDownload);
         profile.setPreference("browser.download.useDownloadDir", true);
         profile.setPreference("browser.download.viewableInternally.enabledTypes", "");
         profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf;text/plain;application/text;text/xml;application/xml");
@@ -28,11 +40,9 @@ public class DownloadCircolari {
         options.setProfile(profile);
 
         // Inizializza il driver di Firefox con le opzioni configurate
-        driver = new FirefoxDriver(options);
+        FirefoxDriver driver = new FirefoxDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
-    }
-
-    public static void main(String[] args) throws InterruptedException {
+        // eseguo il lavoro
         driver.get("https://www.iisgubbio.edu.it/comunicati");
         Thread.sleep(2000);
         List<WebElement> cookie = driver.findElements( By.cssSelector("div.cookiebar"));

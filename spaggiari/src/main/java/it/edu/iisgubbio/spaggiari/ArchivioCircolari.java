@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArchivioCircolari {
-	private static File folder =new File(System.getProperty("user.home")+"/archivio/");
+	public static File folder;  // FIXME : pessima soluzione
 	private static List<Circolare> listaCircolari = new ArrayList<>();
 
 	public static void aggiornaLista() {
+	    System.out.println(folder);
 		File[] listOfFiles = folder.listFiles();
 		for (File file : listOfFiles) {
 			if (file.isFile()) {
@@ -16,7 +17,7 @@ public class ArchivioCircolari {
 			}
 		}
 	}
-	
+
 	public static boolean esiste(int numeroDaCercare) {
 		aggiornaLista();
 		for (Circolare circ : listaCircolari) {

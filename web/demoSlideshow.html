@@ -7,6 +7,7 @@
     <style>
         * { box-sizing: border-box; }
         body { 
+            font-family: Optima, Sans, Verdana, sans-serif; 
             background-color: black;
             margin:0; padding:0 ; width: 100vw; height: 100vh;
             background-color: black;
@@ -16,13 +17,15 @@
             grid-template-areas:
                 "log log gra gra im0 im1"
                 "im2 im3 gra gra im4 im5"
-                "im6 im7 gra gra im8 im9";
+                "im6 im7 gra gra im8 bx1";
         }
         #log { background-color: #EECD00; background-image: url(logo.png);
         background-size: 90%; background-position: center 80%; background-repeat: no-repeat; padding: 1rem}
         span { font-size:2rem; color: white }
         .foto { background-size: cover; background-position: center}
+        .box { overflow: hidden }
     </style>
+    <script src="m_slideshow/script.js"></script>
     <script>
         "use strict";
 
@@ -56,10 +59,10 @@
 
         let verticale = '"log log gra gra im0 im1" '+
                         '"im2 im3 gra gra im4 im5" '+
-                        '"im6 im7 gra gra im8 im9"';
+                        '"im6 im7 gra gra im8 bx1"';
         let orizzontale = '"log log im0 im1 im2 im3" '+
                           '"im4 gra gra gra gra im5" '+
-                          '"im6 gra gra gra gra im7"';
+                          '"im6 gra gra gra gra bx1"';
 
         let play=true;
         function playPausa(){
@@ -111,7 +114,7 @@
                 const j = Math.floor(Math.random() * (i + 1));
                 [foto[i], foto[j]] = [foto[j], foto[i]];
             }
-            for(let i=0;i<=9; i++){
+            for(let i=0;i<=8; i++){
                 document.getElementById("im"+i).style.backgroundImage = "url(img/"+foto[i]+")";
             }
         }
@@ -119,6 +122,7 @@
             scalaVideo("gra",2,3);
             cambiaFoto();
             playPausa();
+            m_slideshow("bx1");
         }
     </script>
 </head>
@@ -136,6 +140,7 @@
     <div id="im6" class="foto" style="grid-area: im6"></div>
     <div id="im7" class="foto" style="grid-area: im7"></div>
     <div id="im8" class="foto" style="grid-area: im8"></div>
-    <div id="im9" class="foto" style="grid-area: im9"></div>
+
+    <div id="bx1" class="box" style="grid-area: bx1"></div>
 </body>
 </html>

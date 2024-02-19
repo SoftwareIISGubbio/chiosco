@@ -1,4 +1,4 @@
-package it.edu.iisgubbio.servizitotem;
+package it.edu.iisgubbio.servizitotem.orario;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,8 +6,6 @@ import java.util.HashSet;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import it.edu.iisgubbio.servizitotem.orario.Attivita;
 
 @RestController
 public class AttivitaManager {

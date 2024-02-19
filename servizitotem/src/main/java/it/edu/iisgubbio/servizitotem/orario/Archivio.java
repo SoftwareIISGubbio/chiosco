@@ -1,10 +1,7 @@
-package it.edu.iisgubbio.servizitotem;
+package it.edu.iisgubbio.servizitotem.orario;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import it.edu.iisgubbio.servizitotem.orario.Attivita;
-import it.edu.iisgubbio.servizitotem.orario.Input;
 
 public class Archivio {
     public static ArrayList<Attivita> attivita;

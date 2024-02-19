@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -17,14 +16,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 @WebFilter("/*")
-public class StatsFilter implements Filter {
+public class FiltroCronometro implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StatsFilter.class);
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // empty
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(FiltroCronometro.class);
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
@@ -37,8 +31,4 @@ public class StatsFilter implements Filter {
         }
     }
 
-    @Override
-    public void destroy() {
-        // empty
-    }
 }

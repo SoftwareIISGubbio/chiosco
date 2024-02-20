@@ -1,6 +1,5 @@
 package it.edu.iisgubbio.spaggiari;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class DownloadCircolari {
             // controlla headless
         }
 
-        ArchivioCircolari.folder =new File(cartellaDownload);
+        ArchivioCircolari archivo =new ArchivioCircolari(cartellaDownload);
         // configuro il driver
         // Configura le opzioni di Firefox per gestire i download dei PDF
         FirefoxOptions options = new FirefoxOptions();
@@ -57,7 +56,7 @@ public class DownloadCircolari {
             System.out.println( titolo);
             WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
             System.out.println("%%%%%: "+Circolare.getNumeroDaNome(titolo));
-            if(!ArchivioCircolari.esiste(Circolare.getNumeroDaNome(titolo)) && Circolare.isCircolare(titolo)){
+            if(!archivo.esiste(Circolare.getNumeroDaNome(titolo)) && Circolare.isCircolare(titolo)){
             	link.click();
             }
         }

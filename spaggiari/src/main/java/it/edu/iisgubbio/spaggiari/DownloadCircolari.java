@@ -50,6 +50,9 @@ public class DownloadCircolari {
         profile.setPreference("pdfjs.disabled", true);  // disable the built-in PDF viewer
 
         options.setProfile(profile);
+        // Impostato headless per far si che il programma funzioni aprendo il
+        //browser in background
+        options.addArguments("-headless");
 
         // Inizializza il driver di Firefox con le opzioni configurate
         FirefoxDriver driver = new FirefoxDriver(options);
@@ -72,8 +75,7 @@ public class DownloadCircolari {
             System.out.println( titolo);
             // Scarto eventuali allegati che non devono essere scaricati scaricare
             WebElement link = elem.findElement(By.cssSelector("div.media-right a.link-to-file"));
-            System.out.println("%%%%%: "+Circolare.getNumeroDaNome(titolo));
-            // Controllo che la circolare rispetti i requisiti per esserlo e che non sia gia stata scaricata
+            // Controllo che la circolare rispetti i requisiti per esserlo e che non sia già stata scaricata
             if(!archivo.esiste(Circolare.getNumeroDaNome(titolo)) && Circolare.isCircolare(titolo)){
             	link.click();
             }

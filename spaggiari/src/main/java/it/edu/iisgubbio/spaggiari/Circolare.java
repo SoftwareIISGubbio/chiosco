@@ -20,8 +20,6 @@ public class Circolare {
      ***********************************************************************/
     public Circolare(String nomeFile){
         nomeCompleto=nomeFile;
-        //Integrazione nuovo metodo divisione stringa
-        //Ho cambaito il programma dato che le circolari non sono divise da un -
 
         Matcher m = patMat(nomeCompleto);
 
